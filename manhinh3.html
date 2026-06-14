@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lighthouse - Kho gợi ý lộ trình</title>
+    <title>Lighthouse - Hoạt động & Cuộc thi</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,280 +11,201 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 190px; 
-            box-sizing: border-box;
+            justify-content: center;
+            align-items: flex-start;
             min-height: 100vh;
         }
 
-        /* --- THANH TASKBAR SÓNG --- */
-        .navbar {
-            background-color: #88e2d3;
+        .main-wrapper {
             width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 10px;
-            z-index: 1000;
+            max-width: 1150px;
+            margin: 30px 20px;
         }
 
-        .brand-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 5px;
+        .app-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .app-title {
+            font-size: 26px;
+            font-weight: 900;
             font-style: italic;
-            cursor: pointer;
+            color: #1a9e8a;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
         }
-
-        .tabs-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .nav-tab {
-            background-color: #88e2d3;
-            color: #000;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            font-style: italic;
-            text-decoration: none;
-            border-radius: 0 0 40px 40px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .nav-tab.active {
+        
+        .school-target-bar {
             background-color: white;
-            color: #000;
-        }
-
-        .nav-tab:hover:not(.active) {
-            background-color: #72cfbe;
-        }
-
-        .user-info-bar {
-            position: fixed;
-            top: 115px;
-            font-size: 14px;
+            padding: 8px 25px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
             font-weight: bold;
             color: #333;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 5px 20px;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            z-index: 999;
-            text-align: center;
-            max-width: 90%;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            margin-bottom: 15px;
+        }
+        .divider {
+            color: #ccc;
         }
 
-        /* --- KHUNG CHỨA CARD --- */
-        .main-content {
-            background-color: white;
-            width: 90%;
-            max-width: 950px;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        .tabs-container {
             display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            box-sizing: border-box;
-            margin-bottom: 40px;
+            justify-content: space-around;
+            background-color: #88e2d3;
+            border-radius: 30px 30px 0 0;
+            padding: 10px 10px 0 10px;
         }
 
-        /* --- THIẾT KẾ CARD --- */
-        .card {
-            background-color: #e0e0e0;
-            width: 32%;
-            border-radius: 12px;
-            padding: 25px 15px;
+        .tab-item {
+            padding: 12px 35px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #000;
+            border-radius: 20px 20px 0 0;
+            text-decoration: none;
+        }
+        .tab-item.active {
+            background-color: white;
+        }
+
+        .dashboard-content {
+            background-color: white;
+            border-radius: 0 0 20px 20px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .contest-card {
+            background-color: #f1f1f1;
+            border-radius: 15px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             box-sizing: border-box;
-            justify-content: space-between;
-            min-height: 480px;
         }
 
-        .card-image-placeholder {
+        .banner-box {
             width: 100%;
             height: 140px;
-            background-color: #002b7f;
+            background-color: #0a3188;
+            border-radius: 10px;
             color: white;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             font-weight: bold;
-            font-size: 18px;
-            border-radius: 6px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
-        .card h3 {
-            margin: 10px 0;
-            font-size: 20px;
+        .contest-title {
+            font-size: 19px;
             font-weight: bold;
             font-style: italic;
-            color: #000;
-            line-height: 1.3;
+            margin: 0 0 15px 0;
         }
 
-        .card-info {
-            font-size: 13px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 15px;
+        .contest-details {
+            font-size: 12px;
+            color: #333;
             line-height: 1.6;
+            margin-bottom: 20px;
         }
 
         .match-score {
             font-weight: bold;
-            font-style: italic;
             font-size: 15px;
             margin-bottom: 20px;
-            color: #000;
         }
 
         .btn-join {
-            background-color: #88e2d3;
+            background-color: #7de3d2;
+            color: black;
             border: none;
-            padding: 10px 35px;
-            font-size: 16px;
+            padding: 10px 30px;
+            font-size: 15px;
             font-weight: bold;
-            font-style: italic;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-join:hover {
-            background-color: #6bcab9;
-        }
-
-        .card.empty {
-            background-color: #e0e0e0;
-            justify-content: center;
-        }
-
-        /* ================= TỐI ƯU TRÊN ĐIỆN THOẠI (RESPONSIVE) ================= */
-        @media (max-width: 768px) {
-            body { padding-top: 210px; }
-
-            .nav-tab {
-                padding: 10px 12px;
-                font-size: 13px;
-                border-radius: 0 0 20px 20px;
-            }
-
-            .user-info-bar { top: 135px; font-size: 12px; }
-
-            .main-content {
-                flex-direction: column; /* Biến cụm thẻ từ hàng ngang thành hàng dọc */
-                padding: 20px;
-            }
-
-            .card {
-                width: 100%; /* Mỗi thẻ chiếm trọn chiều ngang màn hình di động */
-                min-height: auto;
-                gap: 15px;
-            }
-
-            .card.empty {
-                display: none; /* Ẩn thẻ trống thừa trên giao diện điện thoại */
-            }
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="brand-title" onclick="window.location.href='index.html'">Lighthouse ↩</div>
-        <div class="tabs-row">
-            <div class="nav-tab" onclick="goToScreen2()">Tất cả</div>
-            <div id="tab-cuocthi" class="nav-tab" onclick="switchTab('cuocthi')">Cuộc thi</div>
-            <div id="tab-tinhnguyen" class="nav-tab" onclick="switchTab('tinhnguyen')">Hoạt động tình nguyện</div>
-            <div id="tab-hocbong" class="nav-tab" onclick="switchTab('hocbong')">Học bổng</div>
+    <div class="main-wrapper">
+        <div class="app-header">
+            <h1 class="app-title">Lighthouse ↩</h1>
+            <div class="school-target-bar">
+                <span id="schoolInfoText">Mục tiêu: Đại học Ngoại thương</span>
+                <span class="divider">|</span>
+                <span id="strengthInfoText">Thế mạnh: MC</span>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <a href="manhinh2.html" class="tab-item">Tất cả</a>
+            <a href="#" class="tab-item active">Cuộc thi</a>
+            <a href="#" class="tab-item">Hoạt động tình nguyện</a>
+            <a href="#" class="tab-item">Học bổng</a>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="contest-card">
+                <div class="banner-box">TECHFEST</div>
+                <h3 class="contest-title">Techfest</h3>
+                <div class="contest-details">
+                    Hạn chót đăng ký: 22/06/2026<br>
+                    Đối tượng tham gia: THPT, Đại Học,...<br>
+                    Mô tả: Triển lãm khoa học công nghệ toàn quốc.
+                </div>
+                <div class="match-score">Mức độ phù hợp: 85% - I.T</div>
+                <button class="btn-join">Tham gia</button>
+            </div>
+
+            <div class="contest-card">
+                <div class="banner-box" style="background-color:#dcdcdc; color:#333;">Hình ảnh minh họa</div>
+                <h3 class="contest-title">Cuộc thi Tranh<br>biện Sài Gòn</h3>
+                <div class="contest-details">
+                    Hạn chót đăng ký: 22/06/2026<br>
+                    Đối tượng tham gia: THPT, Đại Học,...<br>
+                    Mô tả: Sân chơi tư duy phản biện kịch tính.
+                </div>
+                <div class="match-score">Mức độ phù hợp: 95% - MC</div>
+                <button class="btn-join">Tham gia</button>
+            </div>
+
+            <div class="contest-card" style="background-color: #e5e5e5; opacity: 0.7;">
+                </div>
         </div>
     </div>
 
-    <div class="user-info-bar" id="userInfoText">Mục tiêu: Đang tải...</div>
-
-    <div class="main-content" id="cardContainer"></div>
-
     <script>
-        var userUni = localStorage.getItem("lighthouse_truong") || "Đại học mong muốn";
-        var userStrength = localStorage.getItem("lighthouse_themanh") || "Chưa nhập";
-        document.getElementById("userInfoText").innerText = "Mục tiêu: " + userUni + " | Thế mạnh: " + userStrength;
+        window.onload = function() {
+            var school = localStorage.getItem("lighthouse_school") || "Ngoại thương";
+            var strength = localStorage.getItem("lighthouse_strength") || "Chưa cập nhật";
 
-        var dataStorage = {
-            cuocthi: [
-                { title: "Techfest", type: "IMAGE", bg: "#002b7f", txtColor: "white", deadline: "22/6/2026", target: "THPT, Đại Học,...", desc: "Triển lãm khoa học công nghệ toàn quốc.", match: "85% - I.T" },
-                { title: "Cuộc thi Tranh<br>biện Sài Gòn", type: "TEXT", bg: "transparent", txtColor: "#000", deadline: "22/6/2026", target: "THPT, Đại Học,...", desc: "Sân chơi tư duy phản biện kịch tính.", match: "95% - " + userStrength },
-                { type: "EMPTY" }
-            ],
-            tinhnguyen: [
-                { title: "Chiến dịch Hoa<br>Phượng Đỏ", type: "IMAGE", bg: "#ff4d4d", txtColor: "white", deadline: "30/6/2026", target: "Học sinh THPT", desc: "Chiến dịch tình nguyện hè dành riêng cho khối THPT.", match: "90% - Lan tỏa" },
-                { title: "Tiếp Sức Mùa Thi", type: "IMAGE", bg: "#0055ff", txtColor: "white", deadline: "15/6/2026", target: "THPT & Sinh viên", desc: "Hỗ trợ sĩ tử tham gia kỳ thi Tốt nghiệp THPT Quốc gia.", match: "99% - Phù hợp nhất" },
-                { title: "Môi Trường Xanh", type: "TEXT", bg: "transparent", txtColor: "#000", deadline: "05/7/2026", target: "Tất cả mọi người", desc: "Thu gom rác thải nhựa và trồng cây nội thành.", match: "80% - Cộng đồng" }
-            ],
-            hocbong: [
-                { title: "Học bổng Toàn phần<br>Lighthouse", type: "IMAGE", bg: "#ffcc00", txtColor: "black", deadline: "10/8/2026", target: "Học sinh xuất sắc", desc: "Hỗ trợ 100% học phí và sinh hoạt phí đại học.", match: "92% - Học thuật" },
-                { title: "Học bổng Ươm mầm<br>Tài năng", type: "TEXT", bg: "transparent", txtColor: "#000", deadline: "25/7/2026", target: "Học sinh vượt khó", desc: "Học bổng dành riêng cho học sinh có nghị lực vươn lên.", match: "88% - Vượt khó" },
-                { type: "EMPTY" }
-            ]
-        };
+            var schoolElem = document.getElementById("schoolInfoText");
+            var strengthElem = document.getElementById("strengthInfoText");
 
-        function switchTab(tabName) {
-            document.getElementById("tab-cuocthi").classList.remove("active");
-            document.getElementById("tab-tinhnguyen").classList.remove("active");
-            document.getElementById("tab-hocbong").classList.remove("active");
-
-            document.getElementById("tab-" + tabName).classList.add("active");
-
-            var currentCards = dataStorage[tabName];
-            var htmlLayout = "";
-
-            currentCards.forEach(function(item) {
-                if(item.type === "EMPTY") {
-                    htmlLayout += '<div class="card empty"></div>';
-                } else {
-                    var imageStyle = item.type === "TEXT" ? 'style="background-color: transparent; color: #000; font-size: 16px; font-weight: normal;"' : 'style="background-color: ' + item.bg + '; color: ' + item.txtColor + ';"';
-                    var imageContent = item.type === "TEXT" ? "Hình ảnh minh họa" : item.title.replace("<br>", " ");
-
-                    htmlLayout += '<div class="card">' +
-                                    '<div class="card-image-placeholder" ' + imageStyle + '>' + imageContent + '</div>' +
-                                    '<h3>' + item.title + '</h3>' +
-                                    '<div class="card-info">' +
-                                        'Hạn chót đăng ký: ' + item.deadline + '<br>' +
-                                        'Đối tượng tham gia: ' + item.target + '<br>' +
-                                        'Mô tả: ' + item.desc + 
-                                    '</div>' +
-                                    '<div class="match-score">Mức độ phù hợp: ' + item.match + '</div>' +
-                                    '<button class="btn-join">Tham gia</button>' +
-                                  '</div>';
+            if (schoolElem) {
+                if (!school.toLowerCase().startsWith("đại học")) {
+                    school = "Đại học " + school;
                 }
-            });
-
-            document.getElementById("cardContainer").innerHTML = htmlLayout;
-        }
-
-        var requestedTab = localStorage.getItem("lighthouse_selected_tab") || "cuocthi";
-        switchTab(requestedTab);
-        localStorage.removeItem("lighthouse_selected_tab");
-
-        function goToScreen2() {
-            window.location.href = "manhinh2.html";
-        }
+                schoolElem.textContent = "Mục tiêu: " + school;
+            }
+            if (strengthElem) {
+                strengthElem.textContent = "Thế mạnh: " + strength;
+            }
+        };
     </script>
-
 </body>
 </html>

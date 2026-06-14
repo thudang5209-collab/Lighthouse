@@ -13,66 +13,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
+            height: 100vh;
         }
 
         .container {
             background-color: white;
-            width: 100%;
-            max-width: 850px;
+            width: 850px;
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             text-align: center;
-            box-sizing: border-box;
-            margin: 20px;
-        }
-
-        /* THƯƠNG HIỆU LIGHTHOUSE */
-        .brand-header {
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logo-text {
-            font-size: 32px;
-            font-weight: 900;
-            font-style: italic;
-            color: #2bc4ad;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .tagline {
-            font-size: 14px;
-            font-style: italic;
-            color: #666;
-            font-weight: 500;
-            margin: 0;
-        }
-
-        .tagline::after {
-            content: "";
-            display: block;
-            width: 50px;
-            height: 2px;
-            background-color: #88e2d3;
-            margin: 8px auto 0;
-            border-radius: 2px;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 32px;
             color: #111;
-            margin-top: 10px;
             margin-bottom: 40px;
             line-height: 1.4;
-            font-weight: bold;
         }
 
         .content-layout {
@@ -90,21 +47,15 @@
         }
 
         .circle-placeholder {
-            width: 240px;
-            height: 240px;
+            width: 280px;
+            height: 280px;
             background-color: #e0e0e0;
             border-radius: 50%;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .user-welcome {
-            font-weight: bold;
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 16px;
+            margin-bottom: 25px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0a0a0"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>');
+            background-size: 50%;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .right-side {
@@ -112,7 +63,6 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            width: 100%;
         }
 
         .input-field {
@@ -124,12 +74,11 @@
             border-radius: 8px;
             box-sizing: border-box;
             color: #333;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         .input-field::placeholder {
             color: #555;
-            font-weight: normal;
         }
 
         .btn-submit {
@@ -148,71 +97,45 @@
         .btn-submit:hover {
             background-color: #b5b5b5;
         }
-
-        /* ĐIỆN THOẠI RESPONSIVE */
-        @media (max-width: 768px) {
-            .content-layout {
-                flex-direction: column;
-                gap: 30px;
-            }
-            .left-side, .right-side {
-                width: 100%;
-            }
-            .circle-placeholder {
-                width: 180px;
-                height: 180px;
-            }
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="brand-header">
-            <p class="logo-text">Lighthouse</p>
-            <p class="tagline">Ngọn hải đăng dẫn lối tới giảng đường ước mơ</p>
-        </div>
-
         <h1>Thiết kế lộ trình vào<br>Đại học mong muốn của bạn</h1>
         
         <div class="content-layout">
             <div class="left-side">
-                <div class="circle-placeholder">
-                    <svg viewBox="0 0 24 24" fill="#4f5b66" style="width: 60%; height: 60%;">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </div>
-                <div class="user-welcome">Xin chào User1!</div>
+                <div class="circle-placeholder"></div>
                 <button class="btn-submit" onclick="nextScreen()">Tạo lộ trình</button>
             </div>
 
             <div class="right-side">
-                <input type="text" id="txtTruong" class="input-field" placeholder="Ngôi trường mục tiêu của bạn">
-                <input type="text" id="txtTheManh" class="input-field" placeholder="Thế mạnh của bạn">
-                <input type="text" id="txtDiem" class="input-field" placeholder="Điểm số trung bình của năm học">
+                <input type="text" id="targetSchool" class="input-field" placeholder="Ngôi trường mục tiêu của bạn">
+                <input type="text" id="userStrength" class="input-field" placeholder="Thế mạnh của bạn">
+                <input type="text" id="userGpa" class="input-field" placeholder="Điểm số trung bình của năm học">
             </div>
         </div>
     </div>
 
     <script>
         function nextScreen() {
-            var truong = document.getElementById("txtTruong").value.trim();
-            var themanh = document.getElementById("txtTheManh").value.trim();
-            var diem = document.getElementById("txtDiem").value.trim();
-
-            if (truong === "" || themanh === "") {
-                alert("Bạn hãy điền đầy đủ mục tiêu và thế mạnh nhé!");
+            var schoolValue = document.getElementById("targetSchool").value.trim();
+            var strengthValue = document.getElementById("userStrength").value.trim();
+            
+            if (schoolValue === "") {
+                alert("Bạn ơi, hãy nhập tên ngôi trường mục tiêu của mình nhé!");
                 return;
             }
 
-            // Lưu dữ liệu vào trình duyệt
-            localStorage.setItem("lighthouse_truong", truong);
-            localStorage.setItem("lighthouse_themanh", themanh);
-            localStorage.setItem("lighthouse_diem", diem);
+            // Lưu dữ liệu thô vào localStorage
+            localStorage.setItem("lighthouse_school", schoolValue);
+            localStorage.setItem("lighthouse_strength", strengthValue || "Chưa cập nhật");
 
-            // Chuyển màn hình
+            // Chuyển hướng sang Màn hình 2
             window.location.href = "manhinh2.html";
         }
     </script>
+
 </body>
 </html>
