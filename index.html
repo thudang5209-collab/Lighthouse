@@ -27,17 +27,59 @@
             text-align: center;
             box-sizing: border-box;
             margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- PHẦN TRANG TRÍ TÊN APP & KHẨU HIỆU MỚI --- */
+        .brand-header {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 900;
+            font-style: italic;
+            color: #2bc4ad; /* Màu xanh mint đậm tạo điểm nhấn thương hiệu */
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .tagline {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+            font-weight: 500;
+            margin: 0;
+            position: relative;
+        }
+
+        /* Đường gạch ngang nhỏ trang trí dưới khẩu hiệu */
+        .tagline::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: #88e2d3;
+            margin: 8px auto 0;
+            border-radius: 2px;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 28px;
             color: #111;
+            margin-top: 10px;
             margin-bottom: 40px;
             line-height: 1.4;
             font-weight: bold;
         }
 
-        /* --- SỬ DỤNG LƯỚI GRID ĐỂ PHÂN CHIA BỐ CỤC HOÀN HẢO --- */
+        /* --- BỐ CỤC LƯỚI GRID --- */
         .content-layout {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -125,18 +167,25 @@
             background-color: #b5b5b5;
         }
 
-        /* ================= TỐI ƯU GIAO DIỆN TRÊN ĐIỆN THOẠI (RESPONSIVE) ================= */
+        /* ================= TỐI ƯU TRÊN ĐIỆN THOẠI (RESPONSIVE) ================= */
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
             }
 
+            .logo-text {
+                font-size: 26px;
+            }
+
+            .tagline {
+                font-size: 12px;
+            }
+
             h1 {
-                font-size: 24px;
+                font-size: 22px;
                 margin-bottom: 25px;
             }
 
-            /* Chuyển lưới thành 1 cột dọc và sắp xếp thứ tự: Avatar -> Nhập liệu -> Nút bấm */
             .content-layout {
                 grid-template-columns: 1fr;
                 grid-template-areas: 
@@ -152,7 +201,7 @@
             }
 
             .btn-submit {
-                width: 100%; /* Trên điện thoại nút bấm sẽ dài ra bằng các ô nhập cho đẹp mắt */
+                width: 100%;
                 max-width: 280px;
             }
         }
@@ -161,6 +210,12 @@
 <body>
 
     <div class="container">
+        
+        <div class="brand-header">
+            <p class="logo-text">Lighthouse</p>
+            <p class="tagline">Ngọn hải đăng dẫn lối tới giảng đường ước mơ</p>
+        </div>
+
         <h1>Thiết kế lộ trình vào<br>Đại học mong muốn của bạn</h1>
         
         <div class="content-layout">
@@ -188,24 +243,20 @@
     </div>
 
     <script>
-        // Hàm xử lý khi nhấn nút "Tạo lộ trình"
         function nextScreen() {
             var truong = document.getElementById("txtTruong").value.trim();
             var themanh = document.getElementById("txtTheManh").value.trim();
             var diem = document.getElementById("txtDiem").value.trim();
 
-            // Kiểm tra xem người dùng đã nhập đủ thông tin cốt lõi chưa
             if (truong === "" || themanh === "") {
                 alert("Bạn hãy điền mục tiêu và thế mạnh để Lighthouse thiết kế lộ trình chuẩn nhất nhé!");
                 return;
             }
 
-            // Lưu thông tin vào bộ nhớ trình duyệt (LocalStorage) để Màn hình 2 và 3 lấy ra dùng
             localStorage.setItem("lighthouse_truong", truong);
             localStorage.setItem("lighthouse_themanh", themanh);
             localStorage.setItem("lighthouse_diem", diem);
 
-            // Chuyển hướng sang Màn hình 2 (Bảng điều khiển)
             window.location.href = "manhinh2.html";
         }
     </script>
