@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e6f9f5; /* Nền xanh pastel nhẹ toàn app */
+            background-color: #e6f9f5;
             margin: 0;
             padding: 0;
             display: flex;
@@ -24,7 +24,6 @@
             box-sizing: border-box;
         }
 
-        /* --- THANH ĐIỀU HƯỚNG TABS PHÍA TRÊN --- */
         .app-header {
             text-align: center;
             margin-bottom: 5px;
@@ -54,13 +53,11 @@
             border-radius: 20px 20px 0 0;
             cursor: pointer;
             text-decoration: none;
-            transition: background-color 0.2s;
         }
         .tab-item.active {
             background-color: white;
         }
 
-        /* --- KHUNG CHỨA NỘI DUNG CHÍNH --- */
         .dashboard-content {
             background-color: white;
             border-radius: 0 0 20px 20px;
@@ -71,7 +68,6 @@
             gap: 30px;
         }
 
-        /* --- HÀNG GIỮA: TO-DO LIST VÀ TIẾN ĐỘ --- */
         .middle-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -94,7 +90,6 @@
             text-align: center;
         }
 
-        /* Khối To-Do giả lập */
         .todo-placeholder {
             display: flex;
             flex-direction: column;
@@ -107,7 +102,6 @@
             width: 100%;
         }
 
-        /* Vòng tròn tiến độ */
         .progress-area {
             display: flex;
             flex-direction: column;
@@ -131,9 +125,6 @@
             font-weight: bold;
         }
 
-        /* ================================================================= */
-        /* --- HÀNG DƯỚI CÙNG: BẢNG LỘ TRÌNH CHI TIẾT (ĐÃ UPDATE THEO YÊU CẦU) --- */
-        /* ================================================================= */
         .bottom-schedule-box {
             background-color: #f9f9f9;
             border-radius: 15px;
@@ -141,7 +132,6 @@
             box-sizing: border-box;
         }
 
-        /* Chia đôi bảng: Trái chiếm 45%, Phải chiếm 55% */
         .schedule-grid {
             display: flex;
             justify-content: space-between;
@@ -150,7 +140,6 @@
             margin-top: 15px;
         }
 
-        /* --- NỬA BÊN TRÁI: ĐẨY CÁC CỘT TUẦN SÁT NHAU --- */
         .weekly-side {
             width: 45%;
             display: flex;
@@ -171,7 +160,7 @@
             align-items: flex-end;
             justify-content: space-between;
             width: 100%;
-            max-width: 320px; /* Khống chế độ rộng để các cột gom sát nhau */
+            max-width: 320px;
             height: 180px;
             border-bottom: 2px solid #ccc;
             padding-bottom: 5px;
@@ -188,10 +177,8 @@
         .vertical-bar {
             width: 24px;
             border-radius: 4px 4px 0 0;
-            background-color: #fca5a5; /* Màu hồng chủ đạo cho các cột */
-            transition: transform 0.2s;
+            background-color: #fca5a5;
         }
-        /* Cột Thứ Hai (Mon) có màu xanh mint đặc biệt */
         .vertical-bar.active-day {
             background-color: #82e3d3;
         }
@@ -203,7 +190,6 @@
             color: #000;
         }
 
-        /* --- NỬA BÊN PHẢI: CỘT CHI TIẾT NGÀY (CÓ CHÚ THÍCH TRÁI/PHẢI) --- */
         .daily-side {
             width: 55%;
             display: flex;
@@ -213,7 +199,6 @@
             height: 240px;
         }
 
-        /* Khối danh sách chú thích nhiệm vụ (Nằm bên trái cột chồng) */
         .tasks-legend-list {
             display: flex;
             flex-direction: column;
@@ -234,7 +219,6 @@
         .legend-text {
             color: #000;
         }
-        /* Ô vuông màu nhỏ đứng cạnh chữ chú thích */
         .color-square {
             width: 14px;
             height: 14px;
@@ -242,7 +226,6 @@
             flex-shrink: 0;
         }
 
-        /* Cột xếp chồng nhiều màu ở giữa */
         .stacked-column-container {
             display: flex;
             flex-direction: column;
@@ -254,18 +237,13 @@
             width: 45px;
             height: 200px;
             display: flex;
-            flex-direction: column-reverse; /* Xếp từ dưới lên trên */
+            flex-direction: column-reverse;
             border-radius: 6px;
             overflow: hidden;
         }
 
-        /* Từng cục lộ trình môn học bên trong cột */
         .bar-segment {
             width: 100%;
-            transition: opacity 0.2s;
-        }
-        .bar-segment:hover {
-            opacity: 0.8;
         }
 
         .current-day-title {
@@ -274,12 +252,11 @@
             margin-top: 5px;
         }
 
-        /* Khối danh sách chú thích thời gian (Nằm bên phải cột chồng) */
         .times-labels-list {
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            gap: 22px; /* Căn khoảng cách tương đối khớp với các phân đoạn */
+            gap: 22px;
             width: 60px;
             padding-bottom: 25px;
         }
@@ -290,14 +267,12 @@
             color: #000;
         }
 
-        /* --- BẢNG MÀU ĐỒNG BỘ THEO FIGMA --- */
-        .color-1 { background-color: #5c7bd1; } /* Toán - Xanh dương đậm */
-        .color-2 { background-color: #b05cd1; } /* Lý - Tím */
-        .color-3 { background-color: #e68a4a; } /* Hóa/Môn khác - Cam */
-        .color-4 { background-color: #5cd167; } /* Anh văn - Xanh lá */
-        .color-5 { background-color: #a3f3e7; } /* Kỹ năng - Xanh ngọc nhạt */
+        .color-1 { background-color: #5c7bd1; }
+        .color-2 { background-color: #b05cd1; }
+        .color-3 { background-color: #e68a4a; }
+        .color-4 { background-color: #5cd167; }
+        .color-5 { background-color: #a3f3e7; }
 
-        /* RESPONSIVE TRÊN ĐIỆN THOẠI */
         @media (max-width: 768px) {
             .middle-row {
                 grid-template-columns: 1fr;
@@ -334,13 +309,12 @@
 
         <div class="tabs-container">
             <a href="#" class="tab-item active">Tất cả</a>
-            <a href="manhinh3.html" class="tab-item">Cuộc thi</a>
+            <a href="#" class="tab-item">Cuộc thi</a>
             <a href="#" class="tab-item">Hoạt động tình nguyện</a>
             <a href="#" class="tab-item">Học bổng</a>
         </div>
 
         <div class="dashboard-content">
-            
             <div class="middle-row">
                 <div class="card-box">
                     <h3 class="card-title">Weekly To-Do List</h3>
@@ -358,13 +332,10 @@
                 </div>
             </div>
 
-            /* BẢNG PHÂN TÍCH LỘ TRÌNH ĐÃ SỬA ĐỔI HOÀN HẢO */
             <div class="bottom-schedule-box">
                 <div class="schedule-grid">
-                    
                     <div class="weekly-side">
                         <div class="week-info-text">Week 35 - 08/06/2026 - 14/06/2026</div>
-                        
                         <div class="weekly-bars-container">
                             <div class="bar-wrapper">
                                 <div class="vertical-bar active-day" style="height: 150px;"></div>
@@ -398,7 +369,6 @@
                     </div>
 
                     <div class="daily-side">
-                        
                         <div class="tasks-legend-list">
                             <div class="legend-item">
                                 <span class="legend-text">...</span>
@@ -424,7 +394,12 @@
 
                         <div class="stacked-column-container">
                             <div class="stacked-bar">
-                                <div class="bar-segment color-1" style="height: 30px;"></div> <div class="bar-segment color-2" style="height: 60px;"></div> <div class="bar-segment color-3" style="height: 15px;"></div> <div class="bar-segment color-4" style="height: 55px;"></div> <div class="bar-segment color-5" style="height: 40px;"></div> </div>
+                                <div class="bar-segment color-1" style="height: 30px;"></div>
+                                <div class="bar-segment color-2" style="height: 60px;"></div>
+                                <div class="bar-segment color-3" style="height: 15px;"></div>
+                                <div class="bar-segment color-4" style="height: 55px;"></div>
+                                <div class="bar-segment color-5" style="height: 40px;"></div>
+                            </div>
                             <div class="current-day-title">Mon</div>
                         </div>
 
@@ -435,21 +410,16 @@
                             <div class="time-label-item" style="margin-bottom: 5px;">1 giờ</div>
                             <div class="time-label-item">30 phút</div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // Tự động nhận diện tên trường mục tiêu từ màn hình 1 chuyển sang
         window.onload = function() {
             var savedSchool = localStorage.getItem("lighthouse_truong");
             var displayElem = document.getElementById("targetSchoolDisplay");
-            
             if (savedSchool && displayElem) {
                 displayElem.textContent = "🎯 Mục tiêu: Đại học " + savedSchool;
             } else if (displayElem) {
