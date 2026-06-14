@@ -32,12 +32,14 @@
             z-index: 1000;
         }
 
+        /* Thêm hiệu ứng trỏ chuột vào Logo để người dùng biết có thể bấm quay về trang đầu */
         .brand-title {
             font-size: 22px;
             font-weight: bold;
             color: #000;
             margin-bottom: 5px;
             font-style: italic;
+            cursor: pointer;
         }
 
         .tabs-row {
@@ -50,17 +52,16 @@
         .nav-tab {
             background-color: #88e2d3;
             color: #000;
-            padding: 15px 40px;
-            font-size: 18px;
+            padding: 15px 30px;
+            font-size: 16px;
             font-weight: bold;
             font-style: italic;
             text-decoration: none;
-            border-radius: 0 0 60px 60px; 
+            border-radius: 0 0 40px 40px; 
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
+            transition: all 0.2s;
         }
 
-        /* Ở Màn hình 2, tab "Tất cả" sẽ được Active nền trắng nối liền mạch xuống dưới */
         .nav-tab.active {
             background-color: white;
             color: #000;
@@ -68,12 +69,12 @@
 
         .nav-tab:hover:not(.active) {
             background-color: #72cfbe;
-            transform: translateY(2px);
         }
 
-        /* --- CẤU TRÚC BẢNG ĐIỀU KHIỂN BÊN DƯỚI --- */
+        /* --- CẤU TRÚC BẢNG ĐIỀU KHIỂN --- */
         .dashboard-container {
-            width: 950px;
+            width: 90%;
+            max-width: 950px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -86,7 +87,7 @@
         }
 
         .card {
-            background-color: white; /* Đổi sang nền trắng để tiệp màu với Tab Tất cả khi dính liền */
+            background-color: white; 
             border-radius: 20px;
             padding: 30px;
             flex: 1;
@@ -139,7 +140,7 @@
             display: flex;
             align-items: flex-end;
             justify-content: space-around;
-            height: 250px;
+            min-height: 250px;
         }
 
         .chart-column {
@@ -147,10 +148,11 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            flex: 1;
         }
 
         .bar {
-            width: 30px;
+            width: 25px;
             border-radius: 4px;
         }
         
@@ -160,7 +162,7 @@
 
         .day-label {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
             font-style: italic;
         }
 
@@ -172,18 +174,48 @@
             font-weight: bold;
             font-style: italic;
             gap: 15px;
+            padding-left: 15px;
         }
 
-        .legend-item { display: flex; align-items: center; gap: 10px; }
-        .color-box { width: 15px; height: 15px; }
+        .legend-item { display: flex; align-items: center; gap: 10px; text-align: left; }
+        .color-box { width: 15px; height: 15px; shrink: 0; }
         .bg-purple { background-color: #a86bc1; }
         .bg-blue { background-color: #5c7cba; }
+
+        /* ================= TỐI ƯU TRÊN ĐIỆN THOẠI (RESPONSIVE) ================= */
+        @media (max-width: 768px) {
+            body { padding-top: 180px; }
+            
+            .nav-tab {
+                padding: 10px 12px;
+                font-size: 13px;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .top-row {
+                flex-direction: column; /* Biến 2 ô To-do và Tiến độ thành hàng dọc */
+            }
+
+            .bottom-row {
+                flex-wrap: wrap; /* Cho phép biểu đồ và chú thích tự xuống hàng nếu thiếu chỗ */
+                gap: 20px;
+                padding: 20px 10px;
+            }
+
+            .legend {
+                width: 100%;
+                justify-content: center;
+                border-top: 1px dashed #ccc;
+                padding-top: 15px;
+                padding-left: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <div class="brand-title">Lighthouse</div>
+        <div class="brand-title" onclick="window.location.href='index.html'">Lighthouse ↩</div>
         <div class="tabs-row">
             <div class="nav-tab active">Tất cả</div>
             <div class="nav-tab" onclick="goToScreen3('cuocthi')">Cuộc thi</div>
@@ -226,11 +258,9 @@
     </div>
 
     <script>
-        // Lấy tên trường từ Màn hình 1 để hiển thị cá nhân hóa
         var targetUni = localStorage.getItem("lighthouse_truong") || "Đại học mục tiêu";
         document.getElementById("progressTitle").innerHTML = "Tiến độ vào trường:<br><span style='color:#0055ff;'>" + targetUni + "</span>";
 
-        // Hàm chuyển hướng thông minh sang Màn hình 3 kèm theo tab được chọn
         function goToScreen3(tabName) {
             localStorage.setItem("lighthouse_selected_tab", tabName);
             window.location.href = "manhinh3.html";

@@ -13,7 +13,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 180px; /* Tăng khoảng cách để chứa thêm thanh thông tin mục tiêu */
+            padding-top: 190px; 
             box-sizing: border-box;
             min-height: 100vh;
         }
@@ -38,6 +38,7 @@
             color: #000;
             margin-bottom: 5px;
             font-style: italic;
+            cursor: pointer;
         }
 
         .tabs-row {
@@ -50,14 +51,14 @@
         .nav-tab {
             background-color: #88e2d3;
             color: #000;
-            padding: 15px 40px;
-            font-size: 18px;
+            padding: 15px 30px;
+            font-size: 16px;
             font-weight: bold;
             font-style: italic;
             text-decoration: none;
-            border-radius: 0 0 60px 60px;
+            border-radius: 0 0 40px 40px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
         }
 
         .nav-tab.active {
@@ -69,30 +70,32 @@
             background-color: #72cfbe;
         }
 
-        /* Dòng thông báo nhỏ hiển thị mục tiêu của riêng bạn dưới thanh taskbar */
         .user-info-bar {
             position: fixed;
             top: 115px;
             font-size: 14px;
             font-weight: bold;
             color: #333;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             padding: 5px 20px;
             border-radius: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             z-index: 999;
+            text-align: center;
+            max-width: 90%;
         }
 
         /* --- KHUNG CHỨA CARD --- */
         .main-content {
             background-color: white;
-            width: 950px;
-            padding: 50px 40px;
+            width: 90%;
+            max-width: 950px;
+            padding: 40px 30px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             display: flex;
             justify-content: space-between;
-            gap: 25px;
+            gap: 20px;
             box-sizing: border-box;
             margin-bottom: 40px;
         }
@@ -102,7 +105,7 @@
             background-color: #e0e0e0;
             width: 32%;
             border-radius: 12px;
-            padding: 25px 20px;
+            padding: 25px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -128,7 +131,7 @@
 
         .card h3 {
             margin: 10px 0;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             font-style: italic;
             color: #000;
@@ -171,36 +174,57 @@
             background-color: #e0e0e0;
             justify-content: center;
         }
+
+        /* ================= TỐI ƯU TRÊN ĐIỆN THOẠI (RESPONSIVE) ================= */
+        @media (max-width: 768px) {
+            body { padding-top: 210px; }
+
+            .nav-tab {
+                padding: 10px 12px;
+                font-size: 13px;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .user-info-bar { top: 135px; font-size: 12px; }
+
+            .main-content {
+                flex-direction: column; /* Biến cụm thẻ từ hàng ngang thành hàng dọc */
+                padding: 20px;
+            }
+
+            .card {
+                width: 100%; /* Mỗi thẻ chiếm trọn chiều ngang màn hình di động */
+                min-height: auto;
+                gap: 15px;
+            }
+
+            .card.empty {
+                display: none; /* Ẩn thẻ trống thừa trên giao diện điện thoại */
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <div class="brand-title">Lighthouse</div>
+        <div class="brand-title" onclick="window.location.href='index.html'">Lighthouse ↩</div>
         <div class="tabs-row">
             <div class="nav-tab" onclick="goToScreen2()">Tất cả</div>
-            <div id="tab-cuocthi" class="nav-tab active" onclick="switchTab('cuocthi')">Cuộc thi</div>
+            <div id="tab-cuocthi" class="nav-tab" onclick="switchTab('cuocthi')">Cuộc thi</div>
             <div id="tab-tinhnguyen" class="nav-tab" onclick="switchTab('tinhnguyen')">Hoạt động tình nguyện</div>
             <div id="tab-hocbong" class="nav-tab" onclick="switchTab('hocbong')">Học bổng</div>
         </div>
     </div>
 
-    <div class="user-info-bar" id="userInfoText">
-        Mục tiêu: Đang tải... | Thế mạnh: Đang tải...
-    </div>
+    <div class="user-info-bar" id="userInfoText">Mục tiêu: Đang tải...</div>
 
-    <div class="main-content" id="cardContainer">
-        </div>
+    <div class="main-content" id="cardContainer"></div>
 
     <script>
-        // 1. Đọc dữ liệu từ Màn hình 1 truyền sang thông qua localStorage
         var userUni = localStorage.getItem("lighthouse_truong") || "Đại học mong muốn";
         var userStrength = localStorage.getItem("lighthouse_themanh") || "Chưa nhập";
-        
-        // Hiển thị lên thanh thông tin đầu trang
-        document.getElementById("userInfoText").innerText = "Mục tiêu: " + userUni + " | Thế mạnh của bạn: " + userStrength;
+        document.getElementById("userInfoText").innerText = "Mục tiêu: " + userUni + " | Thế mạnh: " + userStrength;
 
-        // 2. KHO DỮ LIỆU ĐỂ ĐỔ VÀO CÁC TAB
         var dataStorage = {
             cuocthi: [
                 { title: "Techfest", type: "IMAGE", bg: "#002b7f", txtColor: "white", deadline: "22/6/2026", target: "THPT, Đại Học,...", desc: "Triển lãm khoa học công nghệ toàn quốc.", match: "85% - I.T" },
@@ -219,21 +243,16 @@
             ]
         };
 
-        // 3. HÀM CHUYỂN ĐỔI TAB ĐỘNG
         function switchTab(tabName) {
-            // Loại bỏ class active ở toàn bộ các tab cũ
             document.getElementById("tab-cuocthi").classList.remove("active");
             document.getElementById("tab-tinhnguyen").classList.remove("active");
             document.getElementById("tab-hocbong").classList.remove("active");
 
-            // Thêm class active vào tab vừa chọn
             document.getElementById("tab-" + tabName).classList.add("active");
 
-            // Lấy danh sách thẻ của tab đó ra để chuẩn bị hiển thị
             var currentCards = dataStorage[tabName];
             var htmlLayout = "";
 
-            // Duyệt từng thẻ để sinh code HTML tương ứng
             currentCards.forEach(function(item) {
                 if(item.type === "EMPTY") {
                     htmlLayout += '<div class="card empty"></div>';
@@ -255,16 +274,12 @@
                 }
             });
 
-            // Ghi đè HTML mới vào container
             document.getElementById("cardContainer").innerHTML = htmlLayout;
         }
 
-        // Kiểm tra xem Màn hình 2 có gửi yêu cầu mở đích danh Tab nào không
-var requestedTab = localStorage.getItem("lighthouse_selected_tab") || "cuocthi";
-switchTab(requestedTab);
-
-// Xóa dấu vết tab đã chọn sau khi mở để lần sau không bị lỗi cố định
-localStorage.removeItem("lighthouse_selected_tab");
+        var requestedTab = localStorage.getItem("lighthouse_selected_tab") || "cuocthi";
+        switchTab(requestedTab);
+        localStorage.removeItem("lighthouse_selected_tab");
 
         function goToScreen2() {
             window.location.href = "manhinh2.html";
