@@ -287,13 +287,16 @@
         <div class="dashboard-content">
             <div class="middle-row">
                 <div class="card-box">
-                    <h3 class="card-title">Weekly To-Do List</h3>
-                    <div class="todo-placeholder">
-                        <div class="todo-line"></div>
-                        <div class="todo-line"></div>
-                        <div class="todo-line"></div>
-                    </div>
-                </div>
+    <h3 class="card-title">Weekly To-Do List</h3>
+    
+    <div style="display: flex; gap: 5px; margin-bottom: 15px;">
+        <input type="text" id="todoInput" placeholder="Thêm việc cần làm..." style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        <button onclick="addTodo()" style="padding: 8px 15px; background: #88e2d3; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">+</button>
+    </div>
+
+    <ul id="todoList" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+    </ul>
+</div>
 
                 <div class="card-box progress-area">
                     <h3 class="card-title">Tiến độ hoàn thành</h3>
@@ -385,5 +388,87 @@
             }
         };
     </script>
+<script>
+    // 1. Hàm thêm việc
+    function addTodo() {
+        var input = document.getElementById("todoInput");
+        var text = input.value.trim();
+        if (text === "") return;
+
+        var li = document.createElement("li");
+        li.style.display = "flex";
+        li.style.alignItems = "center";
+        li.style.gap = "10px";
+        li.style.padding = "10px";
+        li.style.backgroundColor = "#fff";
+        li.style.border = "1px solid #eee";
+        li.style.borderRadius = "8px";
+
+        li.innerHTML = `
+            <input type="checkbox" onchange="toggleTodo(this)">
+            <span style="flex: 1;">${text}</span>
+            <button onclick="this.parentElement.remove(); saveTodos()" style="border:none; background:none; cursor:pointer; color:red; font-size: 18px;">×</button>
+        `;
+
+        document.getElementById("todoList").appendChild(li);
+        input.value = "";
+        saveTodos();
+    }
+
+    // 2. Hàm gạch ngang khi tích chọn
+    function toggleTodo(checkbox) {
+        var span = checkbox.nextElementSibling;
+        if (checkbox.checked) {
+            span.style.textDecoration = "line-through";
+            span.style.color = "#aaa";
+        } else {
+            span.style.textDecoration = "none";
+            span.style.color = "#000";
+        }
+        saveTodos();
+    }
+
+    // 3. Hàm lưu trữ dữ liệu
+    function saveTodos() {
+        var items = [];
+        document.querySelectorAll("#todoList li").forEach(li => {
+            items.push({
+                text: li.querySelector("span").textContent,
+                checked: li.querySelector("input").checked
+            });
+        });
+        localStorage.setItem("lighthouse_todos", JSON.stringify(items));
+    }
+
+    // 4. Hàm load lại khi mở trang
+    window.onload = function() {
+        // Load tên trường
+        var school = localStorage.getItem("lighthouse_school") || "Ngoại thương";
+        var targetElem = document.getElementById("schoolBarText");
+        if (targetElem) {
+            if (!school.toLowerCase().startsWith("đại học")) school = "Đại học " + school;
+            targetElem.textContent = "Mục tiêu: " + school;
+        }
+
+        // Load To-Do List
+        var saved = JSON.parse(localStorage.getItem("lighthouse_todos") || "[]");
+        saved.forEach(item => {
+            var li = document.createElement("li");
+            li.style.display = "flex";
+            li.style.alignItems = "center";
+            li.style.gap = "10px";
+            li.style.padding = "10px";
+            li.style.backgroundColor = "#fff";
+            li.style.border = "1px solid #eee";
+            li.style.borderRadius = "8px";
+            li.innerHTML = `
+                <input type="checkbox" ${item.checked ? "checked" : ""} onchange="toggleTodo(this)">
+                <span style="flex: 1; text-decoration: ${item.checked ? "line-through" : "none"}; color: ${item.checked ? "#aaa" : "#000"};">${item.text}</span>
+                <button onclick="this.parentElement.remove(); saveTodos()" style="border:none; background:none; cursor:pointer; color:red; font-size: 18px;">×</button>
+            `;
+            document.getElementById("todoList").appendChild(li);
+        });
+    };
+</script>
 </body>
 </html>
