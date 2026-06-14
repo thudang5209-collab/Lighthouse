@@ -33,6 +33,7 @@
             color: #1a9e8a;
             margin: 0 0 5px 0;
             text-transform: uppercase;
+            cursor: pointer;
         }
         
         .school-target-bar {
@@ -52,6 +53,7 @@
             color: #ccc;
         }
 
+        /* TABS CONTAINER */
         .tabs-container {
             display: flex;
             justify-content: space-around;
@@ -67,11 +69,14 @@
             color: #000;
             border-radius: 20px 20px 0 0;
             text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
         .tab-item.active {
             background-color: white;
         }
 
+        /* DASHBOARD CONTENT */
         .dashboard-content {
             background-color: white;
             border-radius: 0 0 20px 20px;
@@ -80,8 +85,10 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 30px;
+            min-height: 400px;
         }
 
+        /* CONTEST CARD */
         .contest-card {
             background-color: #f1f1f1;
             border-radius: 15px;
@@ -91,6 +98,13 @@
             align-items: center;
             text-align: center;
             box-sizing: border-box;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .contest-card.hide {
+            display: none; /* Ẩn thẻ khi không thuộc danh mục được chọn */
+        }
+        .contest-card:hover {
+            transform: translateY(-5px);
         }
 
         .banner-box {
@@ -112,6 +126,10 @@
             font-weight: bold;
             font-style: italic;
             margin: 0 0 15px 0;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .contest-details {
@@ -119,12 +137,15 @@
             color: #333;
             line-height: 1.6;
             margin-bottom: 20px;
+            text-align: left;
+            width: 100%;
         }
 
         .match-score {
             font-weight: bold;
             font-size: 15px;
             margin-bottom: 20px;
+            color: #1a9e8a;
         }
 
         .btn-join {
@@ -136,6 +157,17 @@
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
+            margin-top: auto; /* Đẩy nút xuống dưới cùng thẻ */
+        }
+        
+        /* Thông báo khi không có dữ liệu */
+        .no-data-msg {
+            grid-column: span 3;
+            text-align: center;
+            font-style: italic;
+            color: #777;
+            padding: 40px 0;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -143,7 +175,7 @@
 
     <div class="main-wrapper">
         <div class="app-header">
-            <h1 class="app-title">Lighthouse ↩</h1>
+            <h1 class="app-title" onclick="window.location.href='manhinh2.html'">Lighthouse ↩</h1>
             <div class="school-target-bar">
                 <span id="schoolInfoText">Mục tiêu: Đại học Ngoại thương</span>
                 <span class="divider">|</span>
@@ -152,43 +184,98 @@
         </div>
 
         <div class="tabs-container">
-            <a href="manhinh2.html" class="tab-item">Tất cả</a>
-            <a href="#" class="tab-item active">Cuộc thi</a>
-            <a href="#" class="tab-item">Hoạt động tình nguyện</a>
-            <a href="#" class="tab-item">Học bổng</a>
+            <div class="tab-item" onclick="filterCategory('all', this)">Tất cả</div>
+            <div class="tab-item active" onclick="filterCategory('cuocthi', this)">Cuộc thi</div>
+            <div class="tab-item" onclick="filterCategory('tinhnguyen', this)">Hoạt động tình nguyện</div>
+            <div class="tab-item" onclick="filterCategory('hocbong', this)">Học bổng</div>
         </div>
 
-        <div class="dashboard-content">
-            <div class="contest-card">
+        <div class="dashboard-content" id="cardContainer">
+            <div class="contest-card" data-cat="cuocthi">
                 <div class="banner-box">TECHFEST</div>
-                <h3 class="contest-title">Techfest</h3>
+                <h3 class="contest-title">Techfest 2026</h3>
                 <div class="contest-details">
                     Hạn chót đăng ký: 22/06/2026<br>
                     Đối tượng tham gia: THPT, Đại Học,...<br>
-                    Mô tả: Triển lãm khoa học công nghệ toàn quốc.
+                    Mô tả: Triển lãm và cuộc thi khởi nghiệp đổi mới sáng tạo toàn quốc.
                 </div>
                 <div class="match-score">Mức độ phù hợp: 85% - I.T</div>
                 <button class="btn-join">Tham gia</button>
             </div>
 
-            <div class="contest-card">
-                <div class="banner-box" style="background-color:#dcdcdc; color:#333;">Hình ảnh minh họa</div>
-                <h3 class="contest-title">Cuộc thi Tranh<br>biện Sài Gòn</h3>
+            <div class="contest-card" data-cat="cuocthi">
+                <div class="banner-box" style="background-color:#5c7bd1; color:white;">DEBATE</div>
+                <h3 class="contest-title">Tranh biện Sài Gòn</h3>
                 <div class="contest-details">
                     Hạn chót đăng ký: 22/06/2026<br>
-                    Đối tượng tham gia: THPT, Đại Học,...<br>
-                    Mô tả: Sân chơi tư duy phản biện kịch tính.
+                    Đối tượng tham gia: Học sinh THPT toàn thành phố.<br>
+                    Mô tả: Sân chơi tư duy phản biện và hùng biện kịch tính.
                 </div>
                 <div class="match-score">Mức độ phù hợp: 95% - MC</div>
                 <button class="btn-join">Tham gia</button>
             </div>
 
-            <div class="contest-card" style="background-color: #e5e5e5; opacity: 0.7;">
+            <div class="contest-card hide" data-cat="tinhnguyen">
+                <div class="banner-box" style="background-color:#5cd167; color:white;">MÙA HÈ XANH</div>
+                <h3 class="contest-title">Chiến dịch Hoa Phượng Đỏ</h3>
+                <div class="contest-details">
+                    Hạn chót đăng ký: 30/06/2026<br>
+                    Đối tượng tham gia: Học sinh các trường THPT.<br>
+                    Mô tả: Hoạt động bảo vệ môi trường và hỗ trợ cộng đồng tại địa phương.
                 </div>
+                <div class="match-score">Mức độ phù hợp: 90%</div>
+                <button class="btn-join">Tham gia</button>
+            </div>
+
+            <div class="contest-card hide" data-cat="hocbong">
+                <div class="banner-box" style="background-color:#b05cd1; color:white;">SCHOLARSHIP</div>
+                <h3 class="contest-title">Học bổng Tài năng Trẻ</h3>
+                <div class="contest-details">
+                    Hạn chót đăng ký: 15/07/2026<br>
+                    Đối tượng tham gia: Học sinh lớp 12 xuất sắc.<br>
+                    Mô tả: Học bổng toàn phần hỗ trợ học phí năm nhất đại học.
+                </div>
+                <div class="match-score">Mức độ phù hợp: 80%</div>
+                <button class="btn-join">Tham gia</button>
+            </div>
+            
+            <div id="noDataMessage" class="no-data-msg style="display: none;">Hiện tại chưa có dữ liệu mới cho mục này.</div>
         </div>
     </div>
 
     <script>
+        // Hàm lọc danh mục động
+        function filterCategory(category, element) {
+            // 1. Đổi active style cho các Tab nút bấm
+            var tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // 2. Lọc ẩn/hiện các thẻ Cards dựa trên thuộc tính 'data-cat'
+            var cards = document.querySelectorAll('.contest-card');
+            var visibleCount = 0;
+
+            cards.forEach(function(card) {
+                if (category === 'all' || card.getAttribute('data-cat') === category) {
+                    card.classList.remove('hide');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hide');
+                }
+            });
+
+            // 3. Hiển thị thông báo nếu tab trống
+            var msgElem = document.getElementById('noDataMessage');
+            if (visibleCount === 0) {
+                msgElem.style.display = 'block';
+            } else {
+                msgElem.style.display = 'none';
+            }
+        }
+
+        // Tải và chuẩn hóa dữ liệu hiển thị từ localStorage
         window.onload = function() {
             var school = localStorage.getItem("lighthouse_school") || "Ngoại thương";
             var strength = localStorage.getItem("lighthouse_strength") || "Chưa cập nhật";
@@ -204,6 +291,12 @@
             }
             if (strengthElem) {
                 strengthElem.textContent = "Thế mạnh: " + strength;
+            }
+
+            // Thiết lập trạng thái hiển thị ban đầu phù hợp với tab đang active (Cuộc thi)
+            var initialActiveTab = document.querySelector('.tab-item.active');
+            if (initialActiveTab) {
+                initialActiveTab.click();
             }
         };
     </script>
