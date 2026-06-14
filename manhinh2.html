@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse - Bảng điều khiển</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e6f9f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 140px;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        /* --- THANH TASKBAR SÓNG --- */
+        .navbar {
+            background-color: #88e2d3;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+            z-index: 1000;
+        }
+
+        .brand-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+            font-style: italic;
+        }
+
+        .tabs-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .nav-tab {
+            background-color: #88e2d3;
+            color: #000;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: none;
+            border-radius: 0 0 60px 60px; 
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        /* Ở Màn hình 2, tab "Tất cả" sẽ được Active nền trắng nối liền mạch xuống dưới */
+        .nav-tab.active {
+            background-color: white;
+            color: #000;
+        }
+
+        .nav-tab:hover:not(.active) {
+            background-color: #72cfbe;
+            transform: translateY(2px);
+        }
+
+        /* --- CẤU TRÚC BẢNG ĐIỀU KHIỂN BÊN DƯỚI --- */
+        .dashboard-container {
+            width: 950px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 40px;
+        }
+
+        .top-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white; /* Đổi sang nền trắng để tiệp màu với Tab Tất cả khi dính liền */
+            border-radius: 20px;
+            padding: 30px;
+            flex: 1;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #111;
+            font-style: italic;
+        }
+
+        .todo-bar {
+            background-color: #d9d9d9;
+            height: 30px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .progress-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#88e2d3 100%, #e0e0e0 0); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto 0;
+        }
+        
+        .inner-circle {
+            width: 110px;
+            height: 110px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .bottom-row {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+        }
+
+        .chart-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar {
+            width: 30px;
+            border-radius: 4px;
+        }
+        
+        .bar.mint { background-color: #88e2d3; height: 120px; }
+        .bar.pink { background-color: #f4aab1; height: 100px; }
+        .bar.short-pink { background-color: #f4aab1; height: 80px; }
+
+        .day-label {
+            font-weight: bold;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-size: 13px;
+            font-weight: bold;
+            font-style: italic;
+            gap: 15px;
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 10px; }
+        .color-box { width: 15px; height: 15px; }
+        .bg-purple { background-color: #a86bc1; }
+        .bg-blue { background-color: #5c7cba; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand-title">Lighthouse</div>
+        <div class="tabs-row">
+            <div class="nav-tab active">Tất cả</div>
+            <div class="nav-tab" onclick="goToScreen3('cuocthi')">Cuộc thi</div>
+            <div class="nav-tab" onclick="goToScreen3('tinhnguyen')">Hoạt động tình nguyện</div>
+            <div class="nav-tab" onclick="goToScreen3('hocbong')">Học bổng</div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="top-row">
+            <div class="card">
+                <h2>Weekly To-Do List</h2>
+                <div class="todo-bar"></div>
+                <div class="todo-bar"></div>
+                <div class="todo-bar"></div>
+            </div>
+
+            <div class="card">
+                <h2 id="progressTitle">Tiến độ mục tiêu<br>Đại học</h2>
+                <div class="progress-circle">
+                    <div class="inner-circle">100%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-row">
+            <div class="chart-column"> <div class="bar mint"></div> <span class="day-label">Mon</span> </div>
+            <div class="chart-column"> <div class="bar pink"></div> <span class="day-label">Tue</span> </div>
+            <div class="chart-column"> <div class="bar pink"></div> <span class="day-label">Wed</span> </div>
+            <div class="chart-column"> <div class="bar short-pink"></div> <span class="day-label">Thu</span> </div>
+            <div class="chart-column"> <div class="bar pink"></div> <span class="day-label">Fri</span> </div>
+            <div class="chart-column"> <div class="bar pink"></div> <span class="day-label">Sat</span> </div>
+            <div class="chart-column"> <div class="bar pink"></div> <span class="day-label">Sun</span> </div>
+            
+            <div class="legend">
+                <div class="legend-item"><div class="color-box bg-purple"></div> Lý: Học bài 32 - ...</div>
+                <div class="legend-item"><div class="color-box bg-blue"></div> Toán: Ôn công thức lượng giác</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy tên trường từ Màn hình 1 để hiển thị cá nhân hóa
+        var targetUni = localStorage.getItem("lighthouse_truong") || "Đại học mục tiêu";
+        document.getElementById("progressTitle").innerHTML = "Tiến độ vào trường:<br><span style='color:#0055ff;'>" + targetUni + "</span>";
+
+        // Hàm chuyển hướng thông minh sang Màn hình 3 kèm theo tab được chọn
+        function goToScreen3(tabName) {
+            localStorage.setItem("lighthouse_selected_tab", tabName);
+            window.location.href = "manhinh3.html";
+        }
+    </script>
+
+</body>
+</html>
